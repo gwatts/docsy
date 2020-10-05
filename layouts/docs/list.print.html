@@ -1,0 +1,65 @@
+{{ define "main" }}
+  <div class="td-content">
+  {{ block "print-heading" . }}
+ 	{{ partial "print/page-heading.html" . }}
+  {{ end }}
+
+  {{ block "print-toc" . }}
+	{{ if not .Site.Params.print.disable_toc }}
+    <ul>
+    {{ template "recurse-toc" (dict "page" . "section" .FirstSection "psid" "") }}
+    </ul>
+	{{ end }}
+  {{ end }}
+
+  {{ block "print-posttoc" . }}
+    {{ partial "print/post-toc.html" . }}
+  {{ end }}
+  </div>
+
+  {{ block "print-pages" . }}
+    {{ template "recurse-content" (dict "page" . "section" .FirstSection "psid" "") }}
+  {{ end }}
+{{ end }}
+
+{{ define "recurse-toc" }}
+  {{ $s := .section }}
+  {{ $p := .page }}
+  {{ $psid := .psid }}
+  {{ $pages := (union $s.Pages $s.Sections).ByWeight }}
+  {{ $subSection := 1 }}
+
+  {{ range $pages }}
+    {{ $sid := printf "%s%d" $psid $subSection }}
+    {{ $subSection = add $subSection 1 }}
+	{{ partial "print/toc-li.html" (dict "sid" $sid "Page" .) }}
+    {{ if .IsSection }}
+    <ul>
+        {{ template "recurse-toc" (dict "page" $p "section" . "psid" (printf "%s." $sid)) }}
+    </ul>
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ define "recurse-content" }}
+  {{ $s := .section }}
+  {{ $p := .page }}
+  {{ $psid := .psid }}
+  {{ $pages := (union $s.Pages $s.Sections).ByWeight }}
+  {{ $subSection := 1 }}
+  
+  {{ $doPageBreak := gt (countwords $s.Content) 5 }}
+
+  {{ range $pages }}
+    {{ $sid := printf "%s%d" $psid $subSection }}
+    {{ $subSection = add $subSection 1 }}
+	{{ $params := dict "Page" . "PageNum" $sid "DoPageBreak" $doPageBreak }}
+	{{ partial "print/content.html" $params }}
+
+    {{ if .IsSection }}
+      {{ template "recurse-content" (dict "page" $p "section" . "psid" (printf "%s." $sid) ) }}
+    {{ end }}
+	{{ $doPageBreak = true }}
+  {{ end }}
+{{ end }}
+

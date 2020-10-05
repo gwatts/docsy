@@ -15,5 +15,13 @@ rss_sections = ["blog"]
 # https://github.com/google/docsy-example/blob/master/config.toml
 
 
+[outputFormats]
 
+[outputFormats.PRINT]
+baseName = "index"
+mediaType = "text/html"
+path = "print"
+permalinkable = false
 
+[outputs]
+section = ["HTML", "RSS", "print"]
