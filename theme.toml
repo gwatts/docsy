@@ -10,13 +10,3 @@ min_version = 0.53
 [author]
   name = "The Docsy Authors"
   homepage = "https://docsy.dev"
-
-[outputFormats]
-
-[outputFormats.PRINT]
-baseName = "index"
-mediaType = "text/html"
-path = "print"
-
-[outputs]
-page = ["HTML", "print"]
