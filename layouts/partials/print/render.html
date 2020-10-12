@@ -49,7 +49,7 @@
 </div>
 {{ partial "print/page-heading.html" . }}
 
-{{ if not (.Param "print_disable_toc") }}
+{{ if not (.Param "print.disable_toc") }}
     <ul>
     {{ template "recurse-toc" (dict "page" . "section" .FirstSection "psid" "") }}
     </ul>
