@@ -1,27 +1,3 @@
-{{ define "main" }}
-  <div class="td-content">
-  {{ block "print-heading" . }}
- 	{{ partial "print/page-heading.html" . }}
-  {{ end }}
-
-  {{ block "print-toc" . }}
-	{{ if not .Site.Params.print.disable_toc }}
-    <ul>
-    {{ template "recurse-toc" (dict "page" . "section" .FirstSection "psid" "") }}
-    </ul>
-	{{ end }}
-  {{ end }}
-
-  {{ block "print-posttoc" . }}
-    {{ partial "print/post-toc.html" . }}
-  {{ end }}
-  </div>
-
-  {{ block "print-pages" . }}
-    {{ template "recurse-content" (dict "page" . "section" .FirstSection "psid" "") }}
-  {{ end }}
-{{ end }}
-
 {{ define "recurse-toc" }}
   {{ $s := .section }}
   {{ $p := .page }}
@@ -54,7 +30,7 @@
     {{ $sid := printf "%s%d" $psid $subSection }}
     {{ $subSection = add $subSection 1 }}
 	{{ $params := dict "Page" . "PageNum" $sid "DoPageBreak" $doPageBreak }}
-	{{ partial "print/content.html" $params }}
+    {{ partial "print/content.html" $params }}
 
     {{ if .IsSection }}
       {{ template "recurse-content" (dict "page" $p "section" . "psid" (printf "%s." $sid) ) }}
@@ -63,3 +39,25 @@
   {{ end }}
 {{ end }}
 
+<div class="td-content">
+<div class="pageinfo pageinfo-primary d-print-none">
+<p>
+    This is the multi-page printable view of this section.
+</p><p>
+    <a href="{{ .RelPermalink }}">Click here for the regular view of this page.</a>
+</p>
+</div>
+{{ partial "print/page-heading.html" . }}
+
+{{ if not (.Param "print_disable_toc") }}
+    <ul>
+    {{ template "recurse-toc" (dict "page" . "section" .FirstSection "psid" "") }}
+    </ul>
+{{ end }}
+
+<div class="content">
+      {{ .Content }}
+</div>
+</div>
+
+{{ template "recurse-content" (dict "page" . "section" .FirstSection "psid" "") }}

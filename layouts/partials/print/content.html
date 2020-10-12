@@ -1,6 +1,12 @@
+{{ $tpl := printf "partials/print/content-%s.html" .Page.Type }}
+
+{{ if templates.Exists $tpl }}
+  {{ partial $tpl . }}
+{{ else -}}
 <div class="td-content">
     {{ $break := cond .DoPageBreak "page-break-before: always" "" }}
 	<h1 id="pg-{{ .Page.File.UniqueID }}" style="{{ $break }}">{{ .PageNum }} - {{ .Page.Title }}</h1>
     {{ with .Page.Params.description }}<div class="lead">{{ . | markdownify }}</div>{{ end }}
 	{{ .Page.Content }}
 </div>
+{{ end }}

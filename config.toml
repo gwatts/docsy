@@ -19,6 +19,7 @@ rss_sections = ["blog"]
 
 [outputFormats.PRINT]
 baseName = "index"
+isHTML = true
 mediaType = "text/html"
 path = "print"
 permalinkable = false
