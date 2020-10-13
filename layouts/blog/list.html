@@ -4,10 +4,6 @@
 {{ else }}
 {{$.Scratch.Set "blog-pages" .Pages }}
 {{ end }}
-{{ $pag := .Paginate (( $.Scratch.Get "blog-pages").GroupByDate "2006")}}
-{{ $pageGroups := $pag.PageGroups}}
-{{ if eq $pag.PageNumber 1 }}
-{{ end }}
 <div class="row">
 	<div class="col-12">
 		{{- if .Pages -}}
