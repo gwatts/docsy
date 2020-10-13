@@ -5,7 +5,7 @@
   {{ $pages := (union $s.Pages $s.Sections).ByWeight }}
   {{ $subSection := 1 }}
 
-  {{ range $pages }}
+  {{ range where $pages ".Params.no_print" "!=" true }}
     {{ $sid := printf "%s%d" $psid $subSection }}
     {{ $subSection = add $subSection 1 }}
 	{{ partial "print/toc-li.html" (dict "sid" $sid "Page" .) }}
@@ -26,7 +26,7 @@
   
   {{ $doPageBreak := gt (countwords $s.Content) 50 }}
 
-  {{ range $pages }}
+  {{ range where $pages ".Params.no_print" "!=" true }}
     {{ $sid := printf "%s%d" $psid $subSection }}
     {{ $subSection = add $subSection 1 }}
 	{{ $params := dict "Page" . "PageNum" $sid "DoPageBreak" $doPageBreak }}
