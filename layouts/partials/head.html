@@ -1,18 +1,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {{ hugo.Generator }}
-{{ $alts := newScratch }}
+{{- $outputFormat := partial "outputformat.html" . -}}
+
 {{ range .AlternativeOutputFormats -}}
 <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
-{{$alts.Set .Name 1 -}}
 {{ end -}}
-{{ $isPrint := and (.OutputFormats.Get "print") (not ($alts.Get "print")) }}
 
-{{ if and (eq (getenv "HUGO_ENV") "production") (not $isPrint) }}
+{{ if and (eq (getenv "HUGO_ENV") "production") (ne $outputFormat "print") -}}
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
-{{ else }}
+{{ else -}}
 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-{{ end }}
+{{ end -}}
 
 {{ partialCached "favicons.html" . }}
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}{{ end }}</title>
