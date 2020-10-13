@@ -24,7 +24,8 @@
   {{ $pages := (union $s.Pages $s.Sections).ByWeight }}
   {{ $subSection := 1 }}
   
-  {{ $doPageBreak := gt (countwords $s.Content) 50 }}
+  {{ $breakOnWordCount := default 50 (.Params "print.section_break_wordcount") }}
+  {{ $doPageBreak := gt (countwords $s.Content) $breakOnWordCount }}
 
   {{ range where $pages ".Params.no_print" "!=" true }}
     {{ $sid := printf "%s%d" $psid $subSection }}
@@ -43,6 +44,7 @@
 <div class="pageinfo pageinfo-primary d-print-none">
 <p>
     This is the multi-page printable view of this section.
+    <a href="#" onclick="print();return false;">Click here to print.</a>.
 </p><p>
     <a href="{{ .RelPermalink }}">Click here for the regular view of this page.</a>
 </p>
