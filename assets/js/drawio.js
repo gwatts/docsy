@@ -25,7 +25,7 @@
       var url = {{ .drawio_server | default "https://app.diagrams.net/" | jsonify }};
       url += "#R" + encodeURI(content);
       $img.wrap('<div class="drawio"></div>');
-      $img.after('<a class="drawiobtn" href="' + url + '" target="_blank">Edit</a>');
+      $img.after('<a class="drawiobtn" href="' + url + '" target="_blank"><i class="fas fa-edit"></i></a>');
 
       $img.parent().hover(function () {
         $(this).parent().find('.drawiobtn').show();
