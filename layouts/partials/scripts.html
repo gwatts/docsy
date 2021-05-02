@@ -46,7 +46,7 @@
 {{ if .Site.Params.offlineSearch }}
 {{ $jsSearch = resources.Get "js/offline-search.js" }}
 {{ end }}
-{{ $js := (slice $jsBase $jsAnchor $jsSearch $jsPlantuml $jsDrawio) | resources.Concat "js/main.js" }}
+{{ $js := (slice $jsBase $jsAnchor $jsSearch $jsMermaid $jsPlantuml $jsDrawio) | resources.Concat "js/main.js" }}
 {{ if .Site.IsServer }}
 <script src="{{ $js.RelPermalink }}"></script>
 {{ else }}
