@@ -391,7 +391,7 @@ svg_image_url = "https://www.plantuml.com/plantuml/svg/"
 
 SVG files exported with the tool contain a copy of the original diagram by default.  Docsy can detect this and automatically add an "edit" button over any image that can be edited using the online site.
 
-Hover over the image below and click the <i class="far fa-edit"></i> edit button to instantly start working with it.  Users can then save their changes to the updated image as a new SVG file and check it back into the repo alongside the Markdown, which makes keeping images up to date easy.
+Hover over the image below and click the <i class="fas fa-edit"></i> edit button to instantly start working with it.  Users can then save their changes to the updated image as a new SVG file and check it back into the repo alongside the Markdown, which makes keeping images up to date easy.
 
 As the diagram data is transported via the editor URL, the diagrams.net site does not need any privileges to access your repo.
 
